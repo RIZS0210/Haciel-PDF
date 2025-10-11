@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Haciel-PDF</title>
+<link rel="stylesheet" href="style.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <i class="fa-solid fa-file-pdf logo"></i>
+      <h1>Haciel- compresor PDF</h1>
+      <p class="subtitle">Reduce el tamaño de tus archivos PDF.</p>
+    </div>
+
+    <div class="upload-section">
+      <label class="file-label" for="pdfInput">
+        <i class="fa-solid fa-upload"></i> Seleccionar PDF
+      </label>
+      <input type="file" id="pdfInput" accept="application/pdf" hidden />
+      <p id="fileName" class="file-name">Ningún archivo seleccionado</p>
+    </div>
+
+    <div class="control-section">
+      <label for="sizeSlider">Tamaño máximo de salida deseado (MB): 
+        <span id="sliderValue">2.0</span>
+      </label>
+      <input type="range" id="sizeSlider" min="0.5" max="50" step="0.5" value="2" />
+      <button id="compressBtn"><i class="fa-solid fa-compress"></i> Comprimir Automáticamente</button>
+    </div>
+
+    <div class="progress-container">
+      <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div class="info-section">
+      <p id="originalSize"></p>
+      <p id="compressedSize"></p>
+      <p id="chosenQuality"></p>
+      <p id="status"></p>
+    </div>
+
+    <a id="downloadLink" class="download-btn" style="display:none;" download="comprimido.pdf">
+      <i class="fa-solid fa-download"></i> Descargar PDF Comprimido
+    </a>
+
+    <iframe id="pdfViewer" style="display:none;"></iframe>
+  </div>
+
+  <!-- Librerías -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
