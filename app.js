@@ -1,6 +1,6 @@
 // === Config interna ===
 // Cambia la URL si tu API corre en otro host/puerto.
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://pdfc-9xdx.onrender.com";
 const API_COMPRESS = `${API_BASE}/compress`;
 
 // === Utilidades UI ===
@@ -249,3 +249,4 @@ $("#form").addEventListener("submit", async (e)=>{
 document.addEventListener("keydown", (e)=>{
   if (e.key === "Escape") hideError();
 });
+
