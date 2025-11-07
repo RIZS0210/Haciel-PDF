@@ -249,4 +249,3 @@ $("#form").addEventListener("submit", async (e)=>{
 document.addEventListener("keydown", (e)=>{
   if (e.key === "Escape") hideError();
 });
-
