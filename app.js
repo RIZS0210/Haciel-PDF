@@ -153,7 +153,7 @@ $("#form").addEventListener("submit", async (e)=>{
   fd.append("pipeline", pipeline);
   fd.append("color", color);
   // flags internos
-  fd.append("minus_kb", "220");
+  fd.append("minus_kb", "210");
   fd.append("fast_web", "1");
   fd.append("enforce", "1");
 
@@ -249,4 +249,5 @@ $("#form").addEventListener("submit", async (e)=>{
 document.addEventListener("keydown", (e)=>{
   if (e.key === "Escape") hideError();
 });
+
 
