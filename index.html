@@ -1,58 +1,180 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Haciel-PDF</title>
-<link rel="stylesheet" href="style.css" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js" defer></script>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>HACIEL-PDF · Compresor</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <i class="fa-solid fa-file-pdf logo"></i>
-      <h1>Haciel- compresor PDF</h1>
-      <p class="subtitle">Reduce el tamaño de tus archivos PDF.</p>
-    </div>
+  <div class="bg-aura" aria-hidden="true"></div>
 
-    <div class="upload-section">
-      <label class="file-label" for="pdfInput">
-        <i class="fa-solid fa-upload"></i> Seleccionar PDF
-      </label>
-      <input type="file" id="pdfInput" accept="application/pdf" hidden />
-      <p id="fileName" class="file-name">Ningún archivo seleccionado</p>
-    </div>
+  <main class="container">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">
+          <img src="./Imagen de WhatsApp 2025-11-06 a las 21.59.04_8072ac4c.jpg" alt="Logo de HACIEL-PDF" style="height: 100%; width: 100%; object-fit: contain;">
+        </div>
+        <div class="titles">
+          <h1>HACIEL-PDF</h1>
+          <div class="muted small">Compresión de PDF </div>
+        </div>
+      </div>
+    </header>
 
-    <div class="control-section">
-      <label for="sizeSlider">Tamaño máximo de salida deseado (MB): 
-        <span id="sliderValue">2.0</span>
-      </label>
-      <input type="range" id="sizeSlider" min="0.5" max="50" step="0.5" value="2" />
-      <button id="compressBtn"><i class="fa-solid fa-compress"></i> Comprimir Automáticamente</button>
-    </div>
+    <section class="card">
+      <div class="timeline" id="timeline" role="list">
+        <div class="step active" role="listitem"><span>1</span>Selecciona</div>
+        <div class="step" role="listitem"><span>2</span>Subiendo</div>
+        <div class="step" role="listitem"><span>3</span>Procesando</div>
+        <div class="step" role="listitem"><span>4</span>Descargando</div>
+      </div>
 
-    <div class="progress-container">
-      <div id="progressBar" class="progress-bar"></div>
-    </div>
+      <div class="dropzone" id="dropzone">
+        <input id="file" type="file" accept="application/pdf" aria-label="Seleccionar archivo PDF"/>
+        <div class="dz-inner">
+          <div class="dz-icon" aria-hidden="true">📄</div>
+          <div>
+            <div><strong>Arrastra tu PDF</strong> aquí o <span class="linklike" id="pick">explora</span></div>
+            <div class="muted small" id="fileInfo">Sin archivo</div>
+          </div>
+        </div>
+      </div>
 
-    <div class="info-section">
-      <p id="originalSize"></p>
-      <p id="compressedSize"></p>
-      <p id="chosenQuality"></p>
-      <p id="status"></p>
-    </div>
+      <form id="form" autocomplete="off">
+        <input type="hidden" name="minus_kb" value="210">
+        <input type="hidden" id="fast_web" name="fast_web" value="1">
+        <input type="hidden" id="enforce" name="enforce" value="1">
 
-    <a id="downloadLink" class="download-btn" style="display:none;" download="comprimido.pdf">
-      <i class="fa-solid fa-download"></i> Descargar PDF Comprimido
-    </a>
+        <div class="grid">
+          <div class="col">
+            <label for="target">Tamaño objetivo</label>
+            <div class="inline">
+              <input id="target" name="target" type="number" min="1" step="1" placeholder="ej. 900" required/>
+              <select id="units" name="units" aria-label="Unidades de tamaño">
+                <option value="KB" selected>KB</option>
+                <option value="MB">MB</option>
+              </select>
+            </div>
+            <small class="muted">Apunta al tamaño final deseado del PDF.</small>
+          </div>
 
-    <iframe id="pdfViewer" style="display:none;"></iframe>
-  </div>
+          <div class="col">
+            <label for="pipeline">Tipo de documento</label>
+            <select id="pipeline" name="pipeline">
+              <option value="auto" selected>Auto</option>
+              <option value="scan">Escaneado</option>
+              <option value="photo">Fotográfico</option>
+              <option value="vector">Vectorial</option>
+            </select>
+            <small class="muted">Optimiza según el contenido predominante.</small>
+          </div>
+        </div>
 
-  <!-- Librerías -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
-  <script src="script.js"></script>
+        <div class="grid">
+          <div class="col">
+            <label for="color">Política de color</label>
+            <select id="color" name="color">
+              <option value="auto" selected>Auto</option>
+              <option value="keep">Mantener</option>
+              <option value="rgb">RGB</option>
+            </select>
+          </div>
+
+          <div class="col">
+            <label for="init_dpi">DPI inicial (opcional)</label>
+            <input id="init_dpi" name="init_dpi" type="number" min="72" step="1" placeholder="300"/>
+          </div>
+        </div>
+
+        <details class="adv">
+          <summary>Avanzado</summary>
+          <div class="grid">
+            <div class="col">
+              <label for="min_dpi_light">DPI mínimo (fase ligera)</label>
+              <input id="min_dpi_light" name="min_dpi_light" type="number" min="150" step="1" value="200"/>
+            </div>
+            <div class="col">
+              <label for="max_iter">Iteraciones (fallback)</label>
+              <input id="max_iter" name="max_iter" type="number" min="5" step="1" value="10"/>
+            </div>
+          </div>
+
+          <div class="card sub">
+            <div class="row" style="justify-content:space-between;">
+              <div>
+                <strong>Mejoras de imagen</strong>
+                <div class="muted small">Ajusta contraste/nitidez al rasterizar (opcional)</div>
+              </div>
+              <label class="switch" for="enhance_images">
+                <input type="checkbox" id="enhance_images"/>
+                <span>Activar</span>
+              </label>
+            </div>
+
+            <div id="enhancePane" class="grid hidden">
+              <div class="col">
+                <label for="enh_ppi">PPI rasterizado</label>
+                <input id="enh_ppi" type="number" min="100" max="600" step="25" value="300"/>
+              </div>
+              <div class="col">
+                <label for="enh_contrast">Contraste</label>
+                <input id="enh_contrast" type="number" min="0.1" max="3.0" step="0.1" value="1.0"/>
+              </div>
+              <div class="col">
+                <label for="enh_sharpness">Nitidez</label>
+                <input id="enh_sharpness" type="number" min="0.1" max="3.0" step="0.1" value="1.0"/>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <div class="actions">
+          <button id="btn" type="submit" class="btn primary">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="btnText">Comprimir PDF</span>
+          </button>
+          <button id="reset" type="button" class="btn secondary">Reset</button>
+        </div>
+
+        <div class="progress-wrap hidden" id="progressWrap" role="status" aria-label="Progreso de la compresión">
+          <div class="progress-bar">
+            <div class="progress" id="progress" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="muted small" id="progressText">Listo para comenzar</div>
+        </div>
+      </form>
+    </section>
+
+    <section id="resultCard" class="card hidden">
+      <h2>Resultado</h2>
+      <div id="resultMeta" class="meta">Procesando…</div>
+      <div class="row">
+        <a id="download" class="btn success" href="#" download>Descargar PDF</a>
+        <button id="openAgain" class="btn">Comprimir otro</button>
+        <a id="share" class="btn secondary hidden" href="#" aria-label="Compartir enlace de descarga">Compartir</a>
+      </div>
+    </section>
+
+    <section id="errorCard" class="card hidden">
+      <h2>Error</h2>
+      <pre id="errorBox" class="error"></pre>
+      <div class="row">
+        <button id="dismiss" class="btn">Cerrar</button>
+      </div>
+    </section>
+
+  </main>
+  <footer class="footer">
+    <small>
+      HACIEL-PDF | <a href="https://github.com/RIZS0210" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
+    </small>
+  </footer>
+
+  <div class="toasts" id="toasts" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
 </body>
 </html>
